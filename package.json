@@ -1,0 +1,25 @@
+{
+  "name": "parse-post",
+  "version": "0.1.0",
+  "description": "A function that wraps ordinary request handler and automatically parse posts.  It also protects again nuke requests.",
+  "keywords": [
+    "parse post",
+    "post requests",
+    "http post",
+    "post",
+    "url",
+    "no nuke"
+  ],
+  "maintainers": [
+    {
+      "name": "Xavi",
+      "email": "xavi.rmz@gmail.com",
+      "web": "http://xavi.co"
+    }
+  ],
+  "main": "./parse-post.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/xavi-/node-parse-post.git"
+  }
+}
