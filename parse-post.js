@@ -2,6 +2,8 @@ var qs = require("querystring");
 
 module.exports = function parse_post(handler) {
 	return function(req, res) {
+		var pthis = this, args = Array.apply(null, arguments);
+
 		var body = "";
 		req.on("data", function(chunk) {
 			body += chunk;
@@ -13,7 +15,7 @@ module.exports = function parse_post(handler) {
 		});
 		req.on("end", function() {
 			req.body = qs.parse(body);
-			handler(req, res);
+			handler.apply(pthis, args);
 		});
 	};
 };
