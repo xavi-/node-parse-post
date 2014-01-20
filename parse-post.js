@@ -12,7 +12,7 @@ module.exports = function parse_post(handler) {
 			}
 		});
 		req.on("end", function() {
-			req.body = qs.parse(queryData);
+			req.body = qs.parse(body);
 			handler(req, res);
 		});
 	};
