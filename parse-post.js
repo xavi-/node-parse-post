@@ -1,21 +1,34 @@
 var qs = require("querystring");
 
-module.exports = function parse_post(handler) {
-	return function(req, res) {
-		var pthis = this, args = Array.apply(null, arguments);
+function create_parser(opts) {
+	opts = opts || {};
+	var parser = opts.parser || qs.parse;
+	var limit = opts.limit || 1e6;
+	var contentType = opts["content-type"] || opts.contentType || "text/plain";
+	var message = opts.message || "Too much";
 
-		var body = "";
-		req.on("data", function(chunk) {
-			body += chunk;
-			if(body.length > 1e6) {
-				body = null;
-				res.writeHead(413, { "Content-Type": "text/plain" }).end("Too much");
-				req.connection.destroy();
-			}
-		});
-		req.on("end", function() {
-			req.body = qs.parse(body);
-			handler.apply(pthis, args);
-		});
+	var parse_post = function parse_post(handler) {
+		return function(req, res) {
+			var pthis = this, args = Array.apply(null, arguments);
+
+			var body = "";
+			req.on("data", function(chunk) {
+				body += chunk;
+				if(body.length > limit) {
+					body = null;
+					res.writeHead(413, { "Content-Type": contentType }).end(message);
+					req.connection.destroy();
+				}
+			});
+			req.on("end", function() {
+				req.body = parser(body);
+				handler.apply(pthis, args);
+			});
+		};
 	};
-};
+	parse_post.config = create_parser;
+
+	return parse_post;
+}
+
+module.exports = create_parser();
