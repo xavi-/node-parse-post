@@ -11,9 +11,9 @@ var parse_post = require("parse-post");
 
 var route = beeline.route({
 	"/": function(req, res) {
-		"GET": function(req, res) { /*** Get Code ***/ },
+		"GET": function(req, res) { /*** GET Code ***/ },
 		"POST": parse_post(function(req, res) {
-			// req.body has parse post request
+			// req.body has parsed POST request body
 		})
 	}
 });
