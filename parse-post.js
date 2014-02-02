@@ -4,7 +4,7 @@ function create_parser(opts) {
 	opts = opts || {};
 	var parser = opts.parser || qs.parse;
 	var limit = opts.limit || 1e6;
-	var contentType = opts["content-type"] || opts.contentType || "text/plain";
+	var errorContentType = opts["error-content-type"] || opts.errorContentType || "text/plain";
 	var message = opts.message || "Too much";
 
 	var parse_post = function parse_post(handler) {
@@ -16,7 +16,7 @@ function create_parser(opts) {
 				body += chunk;
 				if(body.length > limit) {
 					body = null;
-					res.writeHead(413, { "Content-Type": contentType }).end(message);
+					res.writeHead(413, { "Content-Type": errorContentType }).end(message);
 					req.connection.destroy();
 				}
 			});
