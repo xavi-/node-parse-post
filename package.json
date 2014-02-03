@@ -1,6 +1,6 @@
 {
   "name": "parse-post",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A function that wraps ordinary request handler and automatically parse posts.  It also protects again nuke requests.",
   "keywords": [
     "parse post",
